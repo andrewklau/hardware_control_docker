@@ -41,7 +41,17 @@
                           <td>{{ $job->source }}
                           <td>{{ $job->task }}
                           <td>{{ $job->device }}
-                          <td>{{ ucfirst($job->status) }}</td>
+                          <td style="text-align: center;">
+                              @if ( $job->status == 'completed' )
+                              <span class="fa fa-check"></span>
+                              @elseif ( $job->status == 'running' )
+                              <span class="fa fa-refresh fa-spin"></span>
+                              @elseif ( $job->status == 'pending' )
+                              <span class="fa fa-spinner fa-spin"></span>
+                              @elseif ( $job->status == 'failed' )
+                              <span class="fa fa-warning"></span>
+                              @endif
+                          </td>
                           <td>{{ $job->created_at->toDayDateTimeString() }}</td>
                           <td><a href="/jobs/view/{{ $job->id }}">View</a></td>
                         </tr>

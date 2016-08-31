@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Auth;
 use App\Jobs;
+use App\Devices;
 use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -38,7 +39,12 @@ class JobController extends Controller
      */
     public function newJob()
     {
-        return view('jobs/new');
+        $devices = Devices::all();
+        if (!$devices->count()) {
+            $devices = [];
+        }
+
+        return view('jobs/new', ['devices' => $devices]);
     }
 
     /**

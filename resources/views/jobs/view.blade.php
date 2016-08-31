@@ -51,9 +51,16 @@
                                 <input type="text" name="status" class="form-control" value="{{ $job->status }}" disabled>
                             </div>
 
-                            <div class="form-group ">
+                            <div class="form-group text-xs-center ">
                                 <label class="default-label">Result</label>
-                                <textarea type="text" name="result" class="form-control" disabled>{{ $job->result }}</textarea>
+                                <pre>{{ $job->result }}
+
+                                </pre>
+                                @if ( $job->status == 'running' )
+                                <div style="text-align: center;">
+                                    <span class="fa fa-refresh fa-spin"></span>
+                                </div>
+                                @endif
                             </div>
 
                             <hr>

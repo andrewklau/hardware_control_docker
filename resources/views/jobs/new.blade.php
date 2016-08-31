@@ -42,8 +42,9 @@
                                 <label class="default-label">Device</label>
                                 <select name="device" class="form-control selectpicker" data-validation="required">
                                     <option value="">--Choose Device --</option>
-                                    <option value="device-1">RaspberryPi 1</option>
-                                    <option value="device-2">RaspberryPi 2</option>
+                                    @foreach ($devices as $device)
+                                    <option value="{{ $device->id }}">{{ $device->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
 

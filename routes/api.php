@@ -16,3 +16,12 @@ use Illuminate\Http\Request;
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
+
+Route::group(['middleware' => 'auth:api'], function () {
+    Route::get('data', function () {
+        return ['here is some data'];
+    });
+
+    Route::get('devices', 'DevicesController@get');
+    Route::post('devices', 'DevicesController@post');
+});
