@@ -14,3 +14,10 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/jobs', 'JobController@index');
+Route::get('/jobs/view/{job}', 'JobController@view');
+Route::get('/jobs/new', 'JobController@newJob');
+Route::post('/jobs/new', 'JobController@postJob');
