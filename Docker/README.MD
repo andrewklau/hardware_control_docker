@@ -16,6 +16,38 @@ curl -sSL get.docker.com | sh
 # Install NodeJS
 curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
 apt-get -y install nodejs
+
+git clone https://github.com/andrewklau/hardware_control_docker
+cd hardware_control_docker/Docker/worker
+npm install
+```
+
+The worker service is a NodeJS script which queries the scheduler for jobs. It should
+be started on boot. The worker requires the following ENV variables:
+
+- SCHEDULER_URL
+- SCHEDULER_TOKEN
+
+Setting the NodeJS script to start on boot will be done with systemd
+
+```
+echo '
+[Service]
+ExecStart=/usr/bin/node /root/hardware_control_docker/Docker/worker/index.js
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=node-worker
+User=root
+Group=root
+Environment=SCHEDULER_URL= SCHEDULER_TOKEN=
+
+[Install]
+WantedBy=multi-user.target ' > /etc/systemd/system/node-worker.service
+
+systemctl enable node-worker
+systemctl start node-worker
+
 ```
 
 ## Debugging

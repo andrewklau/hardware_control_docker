@@ -20,8 +20,6 @@
                     </div>
                     @endif
 
-                    <p>Your current jobs are:</p>
-
                     <table class="table">
                       <thead>
                         <tr>
@@ -40,7 +38,7 @@
                           <td>{{ $job->name }}</td>
                           <td><a href="{{ $job->source }}">{{ $job->source }}</a>
                           <td>{{ $job->task }}
-                          <td>{{ $job->device }}
+                          <td>{{ $job->device_name }}
                           <td style="text-align: center;">
                               @if ( $job->status == 'completed' )
                               <span class="fa fa-check"></span>

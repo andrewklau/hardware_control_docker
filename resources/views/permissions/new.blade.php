@@ -18,8 +18,6 @@
                     </div>
                     @endif
 
-
-                    <p>Posting a job to the device...</p>
                     <div class="col-md-12">
                         <form class="form-horizontal" role="form" method="POST" action="{{ url('permissions/new') }}">
                             {{ csrf_field() }}

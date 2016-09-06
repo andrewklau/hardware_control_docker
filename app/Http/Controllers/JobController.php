@@ -28,7 +28,10 @@ class JobController extends Controller
     public function index()
     {
         $user_id = Auth::user()->id;
-        $jobs = Jobs::where('user_id', $user_id)->get();
+        $jobs = Jobs::where('user_id', $user_id)
+            ->join('devices', 'jobs.device', 'devices.id')
+            ->select('jobs.*', 'devices.name as device_name')
+            ->get();
 
         return view('jobs/index', ['jobs' => $jobs]);
     }
