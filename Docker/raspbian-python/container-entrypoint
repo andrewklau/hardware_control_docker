@@ -1,0 +1,5 @@
+#!/bin/bash
+
+git clone $WORKER_SOURCE workspace
+cd workspace
+eval $WORKER_TASK

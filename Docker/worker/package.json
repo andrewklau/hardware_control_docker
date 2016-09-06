@@ -1,0 +1,21 @@
+{
+  "name": "worker",
+  "version": "1.0.0",
+  "description": "Worker agent to schedule Docker containers",
+  "main": "index.js",
+  "dependencies": {
+    "dockerode": "^2.3.0",
+    "request": "^2.74.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andrewklau/hardware_control_docker/"
+  },
+  "author": "Andrew Lau",
+  "license": "ISC"
+}

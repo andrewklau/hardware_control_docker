@@ -1,0 +1,16 @@
+#!/bin/bash
+
+gpio unexportall
+
+IFS=","
+for i in $WORKER_LIMITS
+do
+   eval gpio $i
+done
+
+chown -HR root.gpio /sys/class/gpio/*
+chmod -R g+w /sys/class/gpio/*
+
+gpio exports
+
+echo "Finished setting GPIO ports..."
