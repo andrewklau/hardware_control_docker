@@ -18,7 +18,6 @@
                     </div>
                     @endif
 
-
                     <p>Posting a job to the device...</p>
                     <div class="col-md-12">
                         <form class="form-horizontal" role="form" method="POST" action="{{ url('jobs/new') }}">
@@ -44,6 +43,16 @@
                                     <option value="">--Choose Device --</option>
                                     @foreach ($devices as $device)
                                     <option value="{{ $device->id }}">{{ $device->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="form-group ">
+                                <label class="default-label">Permission</label>
+                                <select name="permission" class="form-control selectpicker" data-validation="required">
+                                    <option value="">--Choose Permission --</option>
+                                    @foreach ($permissions as $permission)
+                                    <option value="{{ $permission->id }}">{{ $permission->name }}</option>
                                     @endforeach
                                 </select>
                             </div>

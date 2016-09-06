@@ -42,7 +42,14 @@
                             <div class="form-group ">
                                 <label class="default-label">Device</label>
                                 <select name="device" class="form-control selectpicker" disabled>
-                                    <option value="">{{ $job->device }}</option>
+                                    <option value="">{{ $device->name }}</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group ">
+                                <label class="default-label">Permission</label>
+                                <select name="device" class="form-control selectpicker" disabled>
+                                    <option value="">{{ $permission->name }}</option>
                                 </select>
                             </div>
 

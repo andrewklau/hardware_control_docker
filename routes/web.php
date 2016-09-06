@@ -17,7 +17,20 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/jobs', 'JobController@index');
-Route::get('/jobs/view/{job}', 'JobController@view');
-Route::get('/jobs/new', 'JobController@newJob');
-Route::post('/jobs/new', 'JobController@postJob');
+/* Authenticated users */
+Route::group(['middleware' => 'auth'], function () {
+    // Device list
+    Route::get('/devices', 'DevicesController@index');
+    // Permissions
+    Route::get('/permissions', 'PermissionsController@index');
+    Route::get('/permissions/new', 'PermissionsController@newPermission');
+    Route::post('/permissions/new', 'PermissionsController@postPermission');
+    Route::get('/permissions/edit/{permission}', 'PermissionsController@editPermission');
+    Route::post('/permissions/edit/{permission}', 'PermissionsController@patchPermission');
+
+    // Jobs
+    Route::get('/jobs', 'JobController@index');
+    Route::get('/jobs/view/{job}', 'JobController@view');
+    Route::get('/jobs/new', 'JobController@newJob');
+    Route::post('/jobs/new', 'JobController@postJob');
+});

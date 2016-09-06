@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use App\Jobs;
 use App\Devices;
+use App\Permissions;
 use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -44,7 +45,12 @@ class JobController extends Controller
             $devices = [];
         }
 
-        return view('jobs/new', ['devices' => $devices]);
+        $permissions = Permissions::all();
+        if (!$permissions->count()) {
+            $permissions = [];
+        }
+
+        return view('jobs/new', ['devices' => $devices, 'permissions' => $permissions]);
     }
 
     /**
@@ -60,6 +66,7 @@ class JobController extends Controller
                 'source' => 'required',
                 'task' => 'required',
                 'device' => 'required',
+                'permission' => 'required',
             ]
         );
 
@@ -73,6 +80,7 @@ class JobController extends Controller
             $jobs->source = $request->source;
             $jobs->task = $request->task;
             $jobs->device = $request->device;
+            $jobs->permission = $request->permission;
 
             $jobs->save();
 
@@ -91,7 +99,9 @@ class JobController extends Controller
     {
         $user_id = Auth::user()->id;
         $job = Jobs::where('user_id', $user_id)->where('id', $jobId)->first();
+        $device = Devices::find($job->device);
+        $permission = Permissions::find($job->permission);
 
-        return view('jobs/view', ['job' => $job]);
+        return view('jobs/view', ['job' => $job, 'device' => $device, 'permission' => $permission]);
     }
 }

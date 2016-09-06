@@ -17,9 +17,10 @@ class CreateJobsTable extends Migration
             $table->string('name');
             $table->string('source');
             $table->string('task');
-            $table->string('device');
+            $table->int('device');
+            $table->int('permission');
             $table->enum('status', ['pending', 'running', 'failed', 'completed'])->default('pending');
-            $table->string('result')->nullable();
+            $table->longText('result')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreateJobsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('password_resets');
+        Schema::drop('jobs');
     }
 }
