@@ -40,9 +40,14 @@ class DevicesController extends Controller
 
         if ($job) {
             $options = app('request')->header('accept-charset') == 'utf-8' ? JSON_UNESCAPED_UNICODE : null;
+            // Update last seen
+            Devices::findOrFail($device->id)->touch();
 
             return json_encode($job, JSON_UNESCAPED_SLASHES);
         } else {
+            // Update last seen
+            Devices::findOrFail($device->id)->touch();
+
             return;
         }
     }
