@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use Validator;
 use App\Jobs;
 use App\Devices;
 use Illuminate\Http\Request;
@@ -23,6 +24,82 @@ class DevicesController extends Controller
 
         return view('devices/index', ['devices' => $devices]);
     }
+
+      /**
+       * Show the the new device form.
+       *
+       * @return \Illuminate\Http\Response
+       */
+      public function newDevice()
+      {
+          return view('devices/new');
+      }
+
+      /**
+       * Store the device into the database.
+       *
+       * @return \Illuminate\Http\Response
+       */
+      public function postDevice(request $request)
+      {
+          $validation = Validator::make($request->all(),
+              [
+                  'name'   => 'required',
+              ]
+          );
+
+          if ($validation->fails()) {
+              return redirect::back()->withInput()->withErrors($validation);
+          } else {
+              $devices = new Devices();
+
+              $devices->name = $request->name;
+              $devices->save();
+
+              session()->flash('msg', 'Your device has been created');
+
+              return redirect('devices');
+          }
+      }
+
+      /**
+       * Show the the edit device form.
+       *
+       * @return \Illuminate\Http\Response
+       */
+      public function editDevice($deviceId)
+      {
+          $device = Devices::find($deviceId);
+
+          return view('devices/edit', ['device' => $device]);
+      }
+
+      /**
+       * Store the updated device into the database.
+       *
+       * @return \Illuminate\Http\Response
+       */
+      public function patchDevice(request $request)
+      {
+          $validation = Validator::make($request->all(),
+              [
+                  'name'   => 'required',
+              ]
+          );
+
+          if ($validation->fails()) {
+              return redirect::back()->withInput()->withErrors($validation);
+          } else {
+              $devices = Devices::find($request->id);
+
+              $devices->name = $request->name;
+              $devices->save();
+
+              session()->flash('msg', 'Your Device has been updated');
+
+              return redirect('devices');
+          }
+      }
 
     /**
      * Get device jobs.

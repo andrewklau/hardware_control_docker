@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
-                <div class="panel-heading">Devices</div>
+                <div class="panel-heading">Devices<span style="float: right;"><a href="{{ url('/devices/new') }}">New Device</a></span></div>
 
                 <div class="panel-body">
                     @if(Session::has('msg'))
@@ -26,6 +26,7 @@
                           <th>Name</th>
                           <th>Status</th>
                           <th>Last Update</th>
+                          <th></th>
                         </tr>
                       </thead>
                       <tbody>
@@ -40,6 +41,7 @@
                               @endif
                           </td>
                           <td>{{ $device->updated_at->toDayDateTimeString() }}</td>
+                          <td><a href="/devices/edit/{{ $device->id }}">Edit</a></td>
                         </tr>
                         @endforeach
                       </tbody>

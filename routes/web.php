@@ -21,6 +21,11 @@ Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
     // Device list
     Route::get('/devices', 'DevicesController@index');
+    Route::get('/devices/new', 'DevicesController@newPermission');
+    Route::post('/devices/new', 'DevicesController@postPermission');
+    Route::get('/devices/edit/{device}', 'DevicesController@editPermission');
+    Route::post('/devices/edit/{device}', 'DevicesController@patchPermission');
+
     // Permissions
     Route::get('/permissions', 'PermissionsController@index');
     Route::get('/permissions/new', 'PermissionsController@newPermission');
