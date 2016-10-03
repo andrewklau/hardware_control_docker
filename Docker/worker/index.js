@@ -58,7 +58,6 @@ function containerLogs(message, container, status, callback) {
             if (status == 'completed') {
               console.log("Finished running job (" + message.name + ")")
 
-              // unexportall
               docker.createContainer({
                 Image: 'andrewklau/raspbian-gpio',
                 HostConfig: {
