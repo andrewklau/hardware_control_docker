@@ -30,6 +30,21 @@ results back to the scheduler for user analysis.
 Docker is used to provide the secure execution of code on the worker devices. The worker runs a NodeJS
 script to initiate job execution and interact with the Docker daemon.
 
+## Examples
+
+Job execution is very straight forward, students need to provide the following inputs:
+
+- Name (This is an arbitary job name used for identification)
+- Source (A publicly accessible Git repository which the RaspberryPi can clone from)
+- Task (The command to run, this is run as a standard user without root)
+- Device (This is a dropdown box for the list of devices available to the student)
+- Permission (This is a dropdown box for the list of permissions available to the student)
+
+![Example](/public/images/example.png "Example")
+
+The job will be queued for execution to be picked up by the device. Example python scripts are available
+[here](/examples)
+
 ## Installation
 
 The scheduler is built on the Laravel framework (5.3). Clone this repository into your cloud environment,
@@ -57,25 +72,6 @@ composer install
 php artisan migrate
 ```
 
-## Configuration
-
-This project aims to be configuration free, however currently you will need
-to manually add the devices and their tokens into the scheduler.
-
-## Examples
-
-Job execution is very straight forward, students need to provide the following inputs:
-
-- Name (This is an arbitary job name used for identification)
-- Source (A publicly accessible Git repository which the RaspberryPi can clone from)
-- Task (The command to run, this is run as a standard user without root)
-- Device (This is a dropdown box for the list of devices available to the student)
-- Permission (This is a dropdown box for the list of permissions available to the student)
-
-![Example](/public/images/example.png "Example")
-
-The job will be queued for execution to be picked up by the device.
-
 ## Security & Permissions
 
 The default security level is to block all GPIO access.
@@ -83,14 +79,14 @@ The default security level is to block all GPIO access.
 When the worker claims a job it goes through a three step process:
 
 - Run a privileged container to open up the GPIO ports the job has been allocated.
-- Run an unprivileged container to execute student code as a standard user (root privileges dropped).
+- Run an unprivileged container to execute student code as a standard user (the root user is also dropped).
 - Run a privileged container to reset the GPIO ports.
 
 The privileged containers use the WiringPi library to open access to GPIO ports.
-This is packaged in https://hub.docker.com/r/andrewklau/raspbian-gpio/
+This is provided by https://hub.docker.com/r/andrewklau/raspbian-gpio/
 
 Permissions are created through the scheduler interface. These should be set by the lecturer/administrator,
-to be allocated to appropriate user. Permissionso use the WiringPi cli syntax (gpio), they should be passed
+to be allocated to appropriate user. Permissions use the WiringPi cli syntax (gpio), they should be passed
 in a CSV format.
 
 eg. the input `export 17 out,export 18 out,export 27 out` will be executed as:
@@ -104,12 +100,13 @@ gpio export 27 out
 ![Permissions](/public/images/permissions.png "Permissions")
 
 Student code must use `wiringPiSetupSys();` to initialize their GPIO configuration. This is the setup used
-to gain access to GPIO ports without root access.
+to gain access to GPIO ports without root access (exposed by /sys).
 
 ## Devices/Job API
 
-Currently devices must be manually added and installed. See [here](/Docker/README.md) for instructions to setup
-a worker. The device token is randomly generated and available after creating the device. This needs to be improved.
+This project aims to be configuration free, however currently you will need to manually add the devices
+added and installed. See [here](/Docker/README.md) for instructions to setup a worker. The device token
+is randomly generated and available after creating the device. This needs to be improved.
 
 An API endpoint is exposed at /api/devices and accepts the querystring/parameter/header `api_token`.
 
