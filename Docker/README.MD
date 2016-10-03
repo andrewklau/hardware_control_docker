@@ -19,7 +19,7 @@ apt-get -y install nodejs
 
 git clone https://github.com/andrewklau/hardware_control_docker
 cd hardware_control_docker/Docker/worker
-npm install
+npm install --unsafe-perm
 ```
 
 The worker service is a NodeJS script which queries the scheduler for jobs. It should
