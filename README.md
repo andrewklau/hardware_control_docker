@@ -132,6 +132,7 @@ Additional documentation is available [here](/Docker/README.md)
 - Add device management and token generation (let devices check in automatically)
 - Limit user registration (use an OAuth provider instead)
 - Add options to select different container environments (currently only andrewklau/raspbian-python is supported)
+- Add a streaming capability (using the RaspberryPi camera)
 
 ## Conclusion
 
