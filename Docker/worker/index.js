@@ -58,28 +58,6 @@ function containerLogs(message, container, status, callback) {
             if (status == 'completed') {
               console.log("Finished running job (" + message.name + ")")
 
-              docker.createContainer({
-                Image: 'andrewklau/raspbian-gpio',
-                HostConfig: {
-                  "Memory": 134217728, //128MB
-                  "CapAdd": ["SYS_RAWIO"],
-                  "Privileged": true,
-                  "Devices": [{
-                    "PathOnHost": "/dev/mem",
-                    "PathInContainer": "/dev/mem",
-                    "CgroupPermissions": "mrw"
-                  }],
-                },
-                Env: [
-                  'WORKER_LIMITS=unexportall',
-                ]
-              }, function(err, cleanup) {
-                if (err) throw err;
-                cleanup.remove(function(err, data) {
-                  if (err) throw err;
-                });
-              });
-
               // back to job loop
               sleep.sleep(10);
               startJob();
@@ -166,6 +144,31 @@ function startJob() {
                   console.log("Starting the user container: " + message.task + " on " + message.source)
                   container.start({}, function(err, data) {
                     containerLogs(message, container, 'completed');
+
+                    // Clean up
+                    docker.createContainer({
+                      Image: 'andrewklau/raspbian-gpio',
+                      HostConfig: {
+                        "Binds": ["/sys:/sys"],
+                        "Memory": 134217728, //128MB
+                        "CapAdd": ["SYS_RAWIO"],
+                        "Privileged": true,
+                        "Devices": [{
+                          "PathOnHost": "/dev/mem",
+                          "PathInContainer": "/dev/mem",
+                          "CgroupPermissions": "mrw"
+                        }],
+                      },
+                      Env: [
+                        'WORKER_LIMITS=unexportall',
+                      ]
+                    }, function(err, cleanup) {
+                      if (err) throw err;
+                      cleanup.remove(function(err, data) {
+                        if (err) throw err;
+                      });
+                    });
+
                   });
                 });
               });
