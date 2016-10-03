@@ -19,12 +19,12 @@ Auth::routes();
 
 /* Authenticated users */
 Route::group(['middleware' => 'auth'], function () {
-    // Device list
+    // Devices
     Route::get('/devices', 'DevicesController@index');
-    Route::get('/devices/new', 'DevicesController@newPermission');
-    Route::post('/devices/new', 'DevicesController@postPermission');
-    Route::get('/devices/edit/{device}', 'DevicesController@editPermission');
-    Route::post('/devices/edit/{device}', 'DevicesController@patchPermission');
+    Route::get('/devices/new', 'DevicesController@newDevice');
+    Route::post('/devices/new', 'DevicesController@postDevice');
+    Route::get('/devices/edit/{device}', 'DevicesController@editDevice');
+    Route::post('/devices/edit/{device}', 'DevicesController@patchDevice');
 
     // Permissions
     Route::get('/permissions', 'PermissionsController@index');
