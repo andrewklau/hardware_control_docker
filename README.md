@@ -2,8 +2,8 @@
 
 ![Overview](/public/images/overview.png "Overview")
 
-This project provides a working concept on how we can use Docker to remotely execute
-jobs on machinery (primarily electronic machinery) securely.
+This project provides a working proof-of-concept on how we can use Docker to remotely execute
+untrusted code jobs on machinery (primarily electronic machinery) securely.
 
 Major motives:
 
@@ -100,10 +100,18 @@ All Docker containers are built on top of Raspbian Jessie (2016-09-03) - https:/
   - https://hub.docker.com/r/andrewklau/raspbian-gpio/ provides the WiringPi GPIO utility
   - https://hub.docker.com/r/andrewklau/raspbian-python/ provides the WiringPi Python libraries
 
-## Future
+Additional documentation is available [here](/Docker/README.md)
+
+## Future (TODO)
 
 - Implement broadcast notifications for live streaming of results (pusher)
 - Implement level based access for limiting permission scope
 - Add device management and token generation (let devices check in automatically)
 - Limit user registration (use an OAuth provider instead)
 - Add options to select different container workers (eg. now only python is supported)
+
+## Conclusion
+
+This work was done in collaboration with [Dr PJ Radcliffe](http://www.rmit.edu.au/contact/staff-contacts/academic-staff/r/radcliffe-dr-pj) for RMIT University.
+
+Source code is available under the MIT License.
