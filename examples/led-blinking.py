@@ -1,12 +1,41 @@
 import wiringpi
 import time
 
-wiringpi.wiringPiSetup()
+# This is required to access the gpio ports
+wiringpi.wiringPiSetupSys();
 
-while True:
-    time.sleep(0.5)
-    wiringpi.digitalWrite(0,1)
-    wiringpi.digitalWrite(1,0)
-    time.sleep(0.5)
-    wiringpi.digitalWrite(0,0)
-    wiringpi.digitalWrite(1,0)
+time.sleep(0.5)
+wiringpi.digitalWrite(17,1)
+wiringpi.digitalWrite(18,1)
+wiringpi.digitalWrite(27,1)
+time.sleep(0.5)
+wiringpi.digitalWrite(17,1)
+wiringpi.digitalWrite(18,1)
+wiringpi.digitalWrite(27,1)
+
+time.sleep(0.5)
+wiringpi.digitalWrite(17,1)
+wiringpi.digitalWrite(18,1)
+wiringpi.digitalWrite(27,1)
+time.sleep(0.5)
+wiringpi.digitalWrite(17,1)
+wiringpi.digitalWrite(18,1)
+wiringpi.digitalWrite(27,1)
+
+time.sleep(0.5)
+wiringpi.digitalWrite(17,1)
+wiringpi.digitalWrite(18,1)
+wiringpi.digitalWrite(27,1)
+time.sleep(0.5)
+wiringpi.digitalWrite(17,1)
+wiringpi.digitalWrite(18,1)
+wiringpi.digitalWrite(27,1)
+
+time.sleep(0.5)
+wiringpi.digitalWrite(17,1)
+wiringpi.digitalWrite(18,1)
+wiringpi.digitalWrite(27,1)
+time.sleep(0.5)
+wiringpi.digitalWrite(17,1)
+wiringpi.digitalWrite(18,1)
+wiringpi.digitalWrite(27,1)

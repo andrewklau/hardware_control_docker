@@ -135,6 +135,7 @@ function startJob() {
           docker.createContainer({
             Image: 'andrewklau/raspbian-gpio',
             HostConfig: {
+              "Binds": ["/sys:/sys"],
               "Memory": 134217728, //128MB
               "CapAdd": ["SYS_RAWIO"],
               "Privileged": true,

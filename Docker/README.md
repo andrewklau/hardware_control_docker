@@ -13,6 +13,10 @@ sudo -i
 # Install Docker
 curl -sSL get.docker.com | sh
 
+# Get the Docker images
+docker pull andrewklau/raspbian-python
+docker pull andrewklau/raspbian-gpio
+
 # Install NodeJS
 curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
 apt-get -y install nodejs
@@ -65,6 +69,7 @@ The CAP_SYS_RAWIO capability:
 * Allow raw block devices (/dev/[sh]d??) acess
 
 You can bypass the entrypoint to enter the container using
+`docker run -it --entrypoint=/bin/bash -v /sys:/sys --cap-add SYS_RAWIO --device /dev/mem --privileged andrewklau/raspbian-gpio -s`
 `docker run -it --entrypoint=/bin/bash -v /sys:/sys andrewklau/raspbian-python -s`
 
 ## Future

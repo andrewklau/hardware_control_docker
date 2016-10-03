@@ -86,6 +86,9 @@ gpio export 1 out
 gpio export 0 in
 ```
 
+Student code must use `wiringPiSetupSys();` to initialize their GPIO configuration. This is the setup used
+to gain access to GPIO ports without root access.
+
 ## Device/Job API
 
 An API endpoint is exposed at /api/devices and accepts the querystring/parameter/header `api_token`.
