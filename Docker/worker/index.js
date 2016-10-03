@@ -143,32 +143,31 @@ function startJob() {
                   if (err) throw err;
                   console.log("Starting the user container: " + message.task + " on " + message.source)
                   container.start({}, function(err, data) {
-                    containerLogs(message, container, 'completed');
-
-                    // Clean up
-                    docker.createContainer({
-                      Image: 'andrewklau/raspbian-gpio',
-                      HostConfig: {
-                        "Binds": ["/sys:/sys"],
-                        "Memory": 134217728, //128MB
-                        "CapAdd": ["SYS_RAWIO"],
-                        "Privileged": true,
-                        "Devices": [{
-                          "PathOnHost": "/dev/mem",
-                          "PathInContainer": "/dev/mem",
-                          "CgroupPermissions": "mrw"
-                        }],
-                      },
-                      Env: [
-                        'WORKER_LIMITS=unexportall',
-                      ]
-                    }, function(err, cleanup) {
-                      if (err) throw err;
-                      cleanup.remove(function(err, data) {
+                    containerLogs(message, container, 'completed', function() {
+                      // Clean up
+                      docker.createContainer({
+                        Image: 'andrewklau/raspbian-gpio',
+                        HostConfig: {
+                          "Binds": ["/sys:/sys"],
+                          "Memory": 134217728, //128MB
+                          "CapAdd": ["SYS_RAWIO"],
+                          "Privileged": true,
+                          "Devices": [{
+                            "PathOnHost": "/dev/mem",
+                            "PathInContainer": "/dev/mem",
+                            "CgroupPermissions": "mrw"
+                          }],
+                        },
+                        Env: [
+                          'WORKER_LIMITS=unexportall',
+                        ]
+                      }, function(err, cleanup) {
                         if (err) throw err;
+                        cleanup.remove(function(err, data) {
+                          if (err) throw err;
+                        });
                       });
                     });
-
                   });
                 });
               });
