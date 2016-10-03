@@ -32,6 +32,11 @@ Setting the NodeJS script to start on boot will be done with systemd
 
 ```
 echo '
+[Unit]
+Description=Cloud Hardware Control (node-worker)
+After=docker.service
+Requires=docker.service
+
 [Service]
 ExecStart=/usr/bin/node /root/hardware_control_docker/Docker/worker/index.js
 Restart=always
