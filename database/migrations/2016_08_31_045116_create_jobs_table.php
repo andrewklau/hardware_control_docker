@@ -13,12 +13,12 @@ class CreateJobsTable extends Migration
     {
         Schema::create('jobs', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('user_id');
+            $table->integer('user_id');
             $table->string('name');
             $table->string('source');
             $table->string('task');
-            $table->int('device');
-            $table->int('permission');
+            $table->integer('device');
+            $table->integer('permission');
             $table->enum('status', ['pending', 'running', 'failed', 'completed'])->default('pending');
             $table->longText('result')->nullable();
             $table->timestamps();
