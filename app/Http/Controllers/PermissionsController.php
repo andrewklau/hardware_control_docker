@@ -42,7 +42,7 @@ class PermissionsController extends Controller
     {
         $validation = Validator::make($request->all(),
             [
-                'name' => 'required',
+                'name'   => 'required',
                 'limits' => 'required',
             ]
         );
@@ -83,7 +83,7 @@ class PermissionsController extends Controller
     {
         $validation = Validator::make($request->all(),
             [
-                'name' => 'required',
+                'name'   => 'required',
                 'limits' => 'required',
             ]
         );

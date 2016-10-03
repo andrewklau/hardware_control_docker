@@ -65,10 +65,10 @@ class JobController extends Controller
     {
         $validation = Validator::make($request->all(),
             [
-                'name' => 'required',
-                'source' => 'required',
-                'task' => 'required',
-                'device' => 'required',
+                'name'       => 'required',
+                'source'     => 'required',
+                'task'       => 'required',
+                'device'     => 'required',
                 'permission' => 'required',
             ]
         );
