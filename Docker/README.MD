@@ -1,6 +1,6 @@
 # RaspberryPi Worker
 
-The Raspberry Pi worker will query the scheduler for pending jobs, claim the job ...
+The Raspberry Pi worker will query the scheduler for pending jobs, claim the job and post back results.
 
 ## Installing the Worker
 
@@ -47,7 +47,6 @@ WantedBy=multi-user.target ' > /etc/systemd/system/node-worker.service
 
 systemctl enable node-worker
 systemctl start node-worker
-
 ```
 
 ## Debugging
@@ -62,3 +61,8 @@ The CAP_SYS_RAWIO capability:
 
 You can bypass the entrypoint to enter the container using
 `docker run -it --entrypoint=/bin/bash -v /sys:/sys andrewklau/raspbian-python -s`
+
+## Future
+
+- Implement an automated installation (gold image with token generation)
+- Automatically update the node-worker (move to Docker container)
