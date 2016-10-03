@@ -54,6 +54,7 @@ class DevicesController extends Controller
               $devices = new Devices();
 
               $devices->name = $request->name;
+              $devices->api_token = str_random(60);
               $devices->save();
 
               session()->flash('msg', 'Your device has been created');
