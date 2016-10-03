@@ -2,6 +2,8 @@
 
 The Raspberry Pi worker will query the scheduler for pending jobs, claim the job and post back results.
 
+The worker will poll the scheduler every minute for available jobs.
+
 ## Installing the Worker
 
 The worker is based on the Raspbian Lite operating system, as of writing the
@@ -26,13 +28,13 @@ cd hardware_control_docker/Docker/worker
 npm install --unsafe-perm
 ```
 
-The worker service is a NodeJS script which queries the scheduler for jobs. It should
-be started on boot. The worker requires the following ENV variables:
+The worker service is a NodeJS script which queries the scheduler for jobs every minute.
+It should be started on boot. The worker requires the following ENV variables:
 
 - SCHEDULER_URL
 - SCHEDULER_TOKEN
 
-Setting the NodeJS script to start on boot will be done with systemd
+Setting the NodeJS script to start on boot will be done with systemd:
 
 ```
 echo '
@@ -58,6 +60,21 @@ systemctl enable node-worker
 systemctl start node-worker
 ```
 
+RaspberryPi 3 now comes with an inbuilt Wifi adapter! This means we can easily connect this
+to the corporate network:
+
+```
+# Find the Wifi SSID
+iwlist wlan0 scan
+
+echo 'network={
+    ssid="testing"
+    psk="testingPassword"
+}' >> /etc/wpa_supplicant/wpa_supplicant.conf
+
+# wpa-supplicant should notice the change and connect automatically
+```
+
 ## Debugging
 
 `docker run --rm --cap-add SYS_RAWIO --device /dev/mem --privileged andrewklau/raspbian-gpio`
@@ -76,3 +93,4 @@ You can bypass the entrypoint to enter the container using
 
 - Implement an automated installation (gold image with token generation)
 - Automatically update the node-worker (move to Docker container)
+- Implement a timeout to prevent tasks from executing forever

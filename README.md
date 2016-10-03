@@ -62,6 +62,20 @@ php artisan migrate
 This project aims to be configuration free, however currently you will need
 to manually add the devices and their tokens into the scheduler.
 
+## Examples
+
+Job execution is very straight forward, students need to provide the following inputs:
+
+- Name (This is an arbitary job name used for identification)
+- Source (A publicly accessible Git repository which the RaspberryPi can clone from)
+- Task (The command to run, this is run as a standard user without root)
+- Device (This is a dropdown box for the list of devices available to the student)
+- Permission (This is a dropdown box for the list of permissions available to the student)
+
+![Example](/public/images/example.png "Example")
+
+The job will be queued for execution to be picked up by the device.
+
 ## Security & Permissions
 
 The default security level is to block all GPIO access.
@@ -79,17 +93,23 @@ Permissions are created through the scheduler interface. These should be set by 
 to be allocated to appropriate user. Permissionso use the WiringPi cli syntax (gpio), they should be passed
 in a CSV format.
 
-eg. the input `export 1 out,export 0 in` will be executed as:
+eg. the input `export 17 out,export 18 out,export 27 out` will be executed as:
 
 ```
-gpio export 1 out
-gpio export 0 in
+gpio export 17 out
+gpio export 18 out
+gpio export 27 out
 ```
+
+![Permissions](/public/images/permissions.png "Permissions")
 
 Student code must use `wiringPiSetupSys();` to initialize their GPIO configuration. This is the setup used
 to gain access to GPIO ports without root access.
 
-## Device/Job API
+## Devices/Job API
+
+Currently devices must be manually added and installed. See [here](/Docker/README.md) for instructions to setup
+a worker. The device token is randomly generated and available after creating the device. This needs to be improved.
 
 An API endpoint is exposed at /api/devices and accepts the querystring/parameter/header `api_token`.
 
@@ -111,7 +131,7 @@ Additional documentation is available [here](/Docker/README.md)
 - Implement level based access for limiting permission scope
 - Add device management and token generation (let devices check in automatically)
 - Limit user registration (use an OAuth provider instead)
-- Add options to select different container workers (eg. now only python is supported)
+- Add options to select different container environments (currently only andrewklau/raspbian-python is supported)
 
 ## Conclusion
 
