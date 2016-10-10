@@ -107,7 +107,7 @@ function startJob() {
         if (err && data.statusCode != 200) {
           throw err;
         } else {
-          // docker run --rm andrewklau/raspbian-gpio --cap-add SYS_RAWIO --device /dev/mem --privileged
+          // docker run --rm andrewklau/raspbian-gpio --cap-add SYS_RAWIO --device /dev/mem
           console.log("Starting (" + message.name + ") limits container: " + message.limits)
           docker.createContainer({
             Image: 'andrewklau/raspbian-gpio',
@@ -115,7 +115,6 @@ function startJob() {
               "Binds": ["/sys:/sys"],
               "Memory": 134217728, //128MB
               "CapAdd": ["SYS_RAWIO"],
-              "Privileged": true,
               "Devices": [{
                 "PathOnHost": "/dev/mem",
                 "PathInContainer": "/dev/mem",
@@ -151,7 +150,6 @@ function startJob() {
                           "Binds": ["/sys:/sys"],
                           "Memory": 134217728, //128MB
                           "CapAdd": ["SYS_RAWIO"],
-                          "Privileged": true,
                           "Devices": [{
                             "PathOnHost": "/dev/mem",
                             "PathInContainer": "/dev/mem",
